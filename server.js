@@ -2,6 +2,7 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 
+var port = process.env.PORT || 3000;
 var app = express();
 
 app.set('view engine', 'hbs');
@@ -17,7 +18,7 @@ hbs.registerHelper('screamIt', (text) => {
 app.use((req, res, next) => {
     var now = new Date().toString();
     var log = `${now}: ${req.method} ${req.url}`;
-    
+
     console.log(log);
     fs.appendFile('server.log', log+'\n', (err) => {
         if(err){
@@ -51,6 +52,6 @@ app.get('/bad', (req, res) => {
     });
 });
 
-app.listen(3000, () => {
-    console.log(`Server is running on port 3000`)
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`)
 });
